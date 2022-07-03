@@ -9,9 +9,14 @@ const [tutorials, setTutorials] = useState();
   const url = "https://tutorials-api-cw.herokuapp.com/api/tutorials";
 
   const getTutorials = async ( ) => {
+  try {
     const {data} = await axios.get(url);
     setTutorials(data);
-    // console.log(data);
+  } catch (error) {
+     console.log(error);
+  }
+    
+   
   };
 
   useEffect(() => {
@@ -19,16 +24,36 @@ const [tutorials, setTutorials] = useState();
   }, [])
 
   console.log(tutorials);
-  
 
+  const addTutorial = async (tutorial) => {
+    try {
+      await axios.post(url, tutorial);
+     
+      
+    } catch (error) {
+      console.log(error);
+  
+  }
+   getTutorials();
+  };
+
+   const deleteTutorial = async(id) => {
+    try {
+      await axios.delete(`${url}/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+      getTutorials();
+   };
 
 
   return (
     <>
-      <AddTutorial />
-      <TutorialList />
+      <AddTutorial  addTutorial = {addTutorial}/>
+      <TutorialList tutorials = {tutorials} deleteTutorial={deleteTutorial}/>
     </>
   );
 };
+
 
 export default Home;
