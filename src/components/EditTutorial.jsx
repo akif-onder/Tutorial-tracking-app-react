@@ -8,14 +8,12 @@ const {id, title: newTitle, description} = editItem
   useEffect(() => {
     setTitle(newTitle);
     setDesc(description);
-  
-   
-  }, [newTitle, description])
+  }, [newTitle, description]);
   
 
   const handleSave = (e) => {
     e.preventDefault();
-    editTutorial({id:id, title: title, description: desc})
+    editTutorial(id,title,desc);
     setTitle("");
     setDesc("");
   };
@@ -42,7 +40,7 @@ const {id, title: newTitle, description} = editItem
                 className="form-control"
                 id="title"
                 placeholder="Enter your title"
-                value={title}
+                value={title || ""}
                 onChange={(e) => setTitle(e.target.value)}
                 required
               />
@@ -56,7 +54,7 @@ const {id, title: newTitle, description} = editItem
                 className="form-control"
                 id="desc"
                 placeholder="Enter your Description"
-                value={desc}
+                value={desc || ""}
                 onChange={(e) => setDesc(e.target.value)}
                 required
               />
@@ -64,10 +62,10 @@ const {id, title: newTitle, description} = editItem
           </div>
           <div className="modal-footer">
             <button
-              data-bs-dismiss="modal"
               type="button"
               className="btn btn-primary"
               onClick={handleSave}
+              data-bs-dismiss="modal"
             >
               Save
             </button>
